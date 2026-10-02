@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Special Question For You 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg-color: #f7f4fc;
+--card-bg: #ffffff;
+--primary-purple: #d8b4fe;
+--dark-purple: #9333ea;
+--soft-cream: #faf5ff;
+--text-color: #4b3b52;
+}
+
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+
+body {
+font-family: 'Quicksand', sans-serif;
+background-color: var(--bg-color);
+color: var(--text-color);
+min-height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+overflow-x: hidden;
+padding: 20px;
+direction: rtl;
+}
+
+.container {
+width: 100%;
+max-width: 480px;
+background: var(--card-bg);
+border-radius: 25px;
+box-shadow: 0 10px 30px rgba(147, 51, 234, 0.15);
+overflow: hidden;
+position: relative;
+min-height: 520px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+padding: 30px;
+border: 2px solid #f3e8ff;
+}
+
+.step {
+display: none;
+flex-direction: column;
+align-items: center;
+text-align: center;
+animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+width: 100%;
+}
+
+.step.active {
+display: flex;
+}
+
+@keyframes fadeIn {
+from {
+opacity: 0;
+transform: translateY(15px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+h2 {
+font-size: 1.3rem;
+color: #7e22ce;
+margin-bottom: 20px;
+font-weight: 700;
+line-height: 1.5;
+}
+
+p {
+font-size: 1.05rem;
+line-height: 1.6;
+color: var(--text-color);
+}
+
+.heart-icon {
+font-size: 3rem;
+margin-bottom: 15px;
+animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+0%, 100% { transform: translateY(0); }
+50% { transform: translateY(-10px); }
+}
+
+.btn-group {
+display: flex;
+gap: 15px;
+margin-top: 25px;
+width: 100%;
+justify-content: center;
+align-items: center;
+}
+
+.btn {
+background-color: var(--primary-purple);
+color: #4a044e;
+border: none;
+padding: 12px 25px;
+font-size: 1.1rem;
+font-weight: 600;
+border-radius: 50px;
+cursor: pointer;
+box-shadow: 0 4px 15px rgba(216, 180, 254, 0.4);
+transition: all 0.2s ease;
+font-family: 'Quicksand', sans-serif;
+}
+
+.btn:hover {
+background-color: var(--dark-purple);
+color: white;
+}
+
+#yes-btn {
+flex: 2;
+}
+
+#no-btn {
+background-color: #e0e0e0;
+color: #888;
+flex: 1;
+}
+
+.welcome-box {
+background-color: var(--soft-cream);
+padding: 20px;
+border-radius: 18px;
+border: 2px dashed var(--primary-purple);
+margin-bottom: 20px;
+}
+
+.date-input-container {
+margin: 20px 0;
+width: 100%;
+}
+
+input[type="date"] {
+width: 100%;
+padding: 15px;
+border-radius: 15px;
+border: 2px solid var(--primary-purple);
+background-color: var(--soft-cream);
+font-family: 'Quicksand', sans-serif;
+font-size: 1.1rem;
+color: var(--text-color);
+text-align: center;
+outline: none;
+}
+
+.food-grid {
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+gap: 15px;
+width: 100%;
+margin-bottom: 20px;
+}
+
+.food-card {
+background-color: var(--soft-cream);
+border: 2px solid #f3e8ff;
+border-radius: 18px;
+padding: 15px;
+cursor: pointer;
+transition: all 0.2s ease;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 8px;
+}
+
+.food-card span:first-child {
+font-size: 2.2rem;
+}
+
+.food-card span:last-child {
+font-size: 0.95rem;
+font-weight: 600;
+color: var(--text-color);
+}
+
+.food-card.selected {
+background-color: #f3e8ff;
+border-color: var(--dark-purple);
+transform: scale(1.03);
+box-shadow: 0 4px 12px rgba(147, 51, 234, 0.2);
+}
+
+.envelope-container {
+cursor: pointer;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 12px;
+transition: transform 0.3s;
+}
+
+.envelope-container:hover {
+transform: scale(1.03);
+}
+
+.envelope {
+width: 180px;
+height: 125px;
+background-color: #c084fc;
+border-radius: 12px;
+position: relative;
+box-shadow: 0 10px 25px rgba(147, 51, 234, 0.3);
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.envelope::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+border-left: 90px solid transparent;
+border-right: 90px solid transparent;
+border-top: 70px solid #9333ea;
+transform-origin: top;
+transition: transform 0.5s ease;
+}
+
+.envelope.open::before {
+transform: rotateX(180deg);
+z-index: 5;
+}
+
+.kitty-wax-seal {
+width: 55px;
+height: 55px;
+background: #7e22ce;
+border-radius: 50%;
+z-index: 10;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+box-shadow: 0 4px 10px rgba(0,0,0,0.2), inset 0 2px 4px rgba(255,255,255,0.4);
+border: 3px dashed #d8b4fe;
+position: relative;
+}
+
+.kitty-wax-seal span {
+font-size: 1.5rem;
+line-height: 1;
+}
+
+.click-hint {
+font-weight: 700;
+color: #7e22ce;
+font-size: 1.1rem;
+background: #f3e8ff;
+padding: 8px 18px;
+border-radius: 20px;
+border: 1px dashed var(--primary-purple);
+box-shadow: 0 2px 8px rgba(147,51,234,0.2);
+animation: pulseHint 1.5s infinite ease-in-out;
+}
+
+@keyframes pulseHint {
+0%, 100% { transform: scale(1); }
+50% { transform: scale(1.05); }
+}
+
+.letter-content {
+display: none;
+background-color: var(--soft-cream);
+padding: 24px;
+border-radius: 20px;
+border: 3px solid var(--primary-purple);
+width: 100%;
+text-align: right;
+animation: fadeIn 0.8s ease forwards;
+box-shadow: 0 8px 25px rgba(147, 51, 234, 0.15);
+position: relative;
+}
+
+.letter-header-corner {
+font-size: 0.9rem;
+color: #7e22ce;
+font-weight: 700;
+margin-bottom: 12px;
+line-height: 1.5;
+border-bottom: 1px dashed var(--primary-purple);
+padding-bottom: 8px;
+}
+
+.letter-body {
+font-size: 1rem;
+line-height: 1.9;
+color: #4b3b52;
+margin-bottom: 15px;
+font-weight: 500;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<!-- Step 1 -->
+<div class="step active" id="step-1">
+<div class="heart-icon">💜</div>
+<div class="welcome-box">
+<p>أهلاً بمن ملكت القلب والروح، أهلاً بمن تجعل لكل لحظة معي طعم الفرح وسحر الحنين. مساؤكِ حب واشتياق يا أثمن ما أملك.</p>
+</div>
+<h2>هل تقبلين الخروج معي في موعد غرامي؟</h2>
+<div class="btn-group">
+<button class="btn" id="yes-btn" onclick="nextStep(2)">نعم بكل سرور! 🥰</button>
+<button class="btn" id="no-btn" onclick="handleNoClick()">لا 🙈</button>
+</div>
+</div>
+
+<!-- Step 2 -->
+<div class="step" id="step-2">
+<div class="heart-icon">🗓️</div>
+<h2>ما هو يوم التقائنا الذي أنرتِ دربي فيه أميرتي؟</h2>
+<div class="date-input-container">
+<input type="date" id="date-picker">
+</div>
+<button class="btn next-btn" onclick="validateDate()">التالي ✨</button>
+</div>
+
+<!-- Step 3 -->
+<div class="step" id="step-3">
+<div class="heart-icon">🍕</div>
+<h2>ماذا سنتناول في موعدنا يا أميرتي؟</h2>
+<div class="food-grid">
+<div class="food-card" onclick="selectFood(this, 'بيتزا 🍕')">
+<span>🍕</span>
+<span>بيتزا</span>
+</div>
+<div class="food-card" onclick="selectFood(this, 'مرقة بالخضار 🥕')">
+<span>🥕</span>
+<span>مرقة بالخضار</span>
+</div>
+<div class="food-card" onclick="selectFood(this, 'أكلات سريعة 🍔')">
+<span>🍔</span>
+<span>أكلات سريعة</span>
+</div>
+<div class="food-card" onclick="selectFood(this, 'لوبية جزائرية 🫘')">
+<span>🫘</span>
+<span>لوبية جزائرية</span>
+</div>
+</div>
+<button class="btn next-btn" onclick="validateFood()">التالي 💌</button>
+</div>
+
+<!-- Step 4 -->
+<div class="step" id="step-4">
+<div class="heart-icon">🏰</div>
+<h2>أين تريدين بناء قصر يا أميرتي؟</h2>
+<div class="food-grid">
+<div class="food-card" onclick="selectCountry(this, 'سويسرا 🇨🇭')">
+<span>🇨🇭</span>
+<span>سويسرا</span>
+</div>
+<div class="food-card" onclick="selectCountry(this, 'فرنسا 🇫🇷')">
+<span>🇫🇷</span>
+<span>فرنسا</span>
+</div>
+<div class="food-card" onclick="selectCountry(this, 'إيطاليا 🇮🇹')">
+<span>🇮🇹</span>
+<span>إيطاليا</span>
+</div>
+<div class="food-card" onclick="selectCountry(this, 'نرويج 🇳🇴')">
+<span>🇳🇴</span>
+<span>نرويج</span>
+</div>
+</div>
+<button class="btn next-btn" onclick="validateCountry()">التالي 💍</button>
+</div>
+
+<!-- Step 5 -->
+<div class="step" id="step-5">
+<div id="envelope-wrapper" class="envelope-container" onclick="openEnvelope()">
+<div class="envelope" id="envelope">
+<div class="kitty-wax-seal" title="Hello Kitty Seal">
+<span>🎀</span>
+</div>
+</div>
+<div class="click-hint">اضغط هنا لفتح 💌</div>
+</div>
+
+<div class="letter-content" id="letter-content">
+<div class="letter-header-corner">
+📅 20 أفريل 2026<br>
+✨ إلى أميرة مملكتي وسومتي
+</div>
+<div class="letter-body">
+إلى من ملكتِ فؤادي وروحي؛ إن حبكِ ليس مجرد كلمات أكتبها، بل هو حياة أعيش تفاصيلها بكل صدق، وعالم أجد فيه نفسي وحدي معكِ. إن الشوق إليكِ يشعل في روحي لهيباً لا يطفئه إلا لقياكِ، وكأن عقارب الساعة لا تشير إلا إلى موعد اللقاء بكِ. لقد عاهدتُ قلبي ونذرتُ روحي بأن تكوني أنتِ الملكة الوحيدة التي تتربع على عرش فؤادي، وبأن أكون لكِ وحدكِ السند والأمان والفارس الذي يحمي عينيكِ؛ فأنا رجل لا يعرف في الحب سوى وجهكِ، ولستُ للكون شيئاً، ولكني لكِ كل شيء.
+</div>
+<p style="text-align: center; margin-top: 15px; font-family: 'Sacramento', cursive; font-size: 2.3rem; color: #7e22ce;">دائماً وأبداً لك وحدك يا أميرتي ✨💜</p>
+</div>
+</div>
+</div>
+
+<script>
+let selectedFoodItem = '';
+let selectedCountryItem = '';
+let noClickCount = 0;
+
+function nextStep(stepNumber) {
+document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+document.getElementById(step-${stepNumber}`).classList.add('active');
+}
+
+function handleNoClick() {
+noClickCount++;
+const noBtn = document.getElementById('no-btn');
+const yesBtn = document.getElementById('yes-btn');
+
+const messages = [
+"أمتأكدة يا أميرتي؟ جربي مجدداً 🥺",
+"لا يمكنكِ اختيار هذا! الزر الصحيح بجانبك 🤭",
+"حاول مرة أخرى بحب أكبر ❤️",
+"لا يوجد فرع للاختيار الخاطئ هنا! 🥰"
+ ];
+
+if (noClickCount < 4) {
+alert(messages[noClickCount - 1]);
+yesBtn.style.transform = scale(${1 + noClickCount * 0.15})`;
+} else {
+noBtn.style.display = 'none';
+alert('لقد اختفى الزر! ليس أمامك سوى قول نعم بكل سرور 💜✨');
+}
+}
+
+function validateDate() {
+const dateInput = document.getElementById('date-picker').value;
+if (!dateInput) {
+alert('الرجاء اختيار التاريخ يا أميرتي! 🗓️');
+return;
+}
+
+if (dateInput === '2026-04-20') {
+nextStep(3);
+} else {
+alert('سوف يكون نهار مثل أعمى و دربي سيكونو ظلاما أجيبي صحيح يا قلبي لكي ينار دربي 🥺❤️');
+}
+}
+
+function selectFood(element, foodName) {
+document.querySelectorAll('#step-3 .food-card').forEach(card => card.classList.remove('selected'));
+element.classList.add('selected');
+selectedFoodItem = foodName;
+}
+
+function validateFood() {
+if (!selectedFoodItem) {
+alert('الرجاء اختيار وجبة يا أميرتي! 🍽️');
+return;
+}
+
+if (selectedFoodItem.includes('بيتزا')) {
+nextStep(4);
+} else {
+alert('الان أنا شبعان ولا أريد أكل، إذا أخطأتي مرة قادمة سألتهمك! 🤭🦖');
+}
+}
+
+function selectCountry(element, countryName) {
+document.querySelectorAll('#step-4 .food-card').forEach(card => card.classList.remove('selected'));
+element.classList.add('selected');
+selectedCountryItem = countryName;
+}
+
+function validateCountry() {
+if (!selectedCountryItem) {
+alert('الرجاء اختيار بلد إقامة يا أميرتي! 🏰');
+return;
+}
+
+if (selectedCountryItem.includes('سويسرا')) {
+nextStep(5);
+} else {
+alert('أخطأتي في موقع بناء لأنه فارسك في بلد اخر اختاري بلد اخر ل اكمل بناء قصر بجانب فارسكي');
+}
+}
+
+function openEnvelope() {
+const envelope = document.getElementById('envelope');
+const wrapper = document.getElementById('envelope-wrapper');
+const letter = document.getElementById('letter-content');
+
+envelope.classList.add('open');
+
+setTimeout(() => {
+wrapper.style.display = 'none';
+letter.style.display = 'block';
+}, 450);
+}
+</script>
+</body>
+</html>
